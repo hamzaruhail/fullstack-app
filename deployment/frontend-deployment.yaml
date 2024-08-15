@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-frontend-deployment
+  name: frontend-deployment
   namespace: fullstack-app
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: nginx-frontend
+      app: frontend
   template:
     metadata:
       labels:
-        app: nginx-frontend
+        app: frontend
     spec:
       containers:
-      - name: nginx-frontend
-        image: hamzaruhail/project-frontend
+      - name: frontend
+        image: hamzaruhail/frontend:v1
         ports:
         - containerPort: 80
 
@@ -24,14 +24,14 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-frontend-svc
+  name: frontend-service
   namespace: fullstack-app
 spec:
-  selector:
-    app: nginx-frontend
-  ports:
-  - protocol: TCP
-    port: 80
-    targetPort: 80
-    nodePort: 31000
   type: NodePort
+  selector:
+    app: frontend
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 31000
