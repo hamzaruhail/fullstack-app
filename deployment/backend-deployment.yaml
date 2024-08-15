@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-deployment
+  namespace: fullstack-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: backend
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      containers:
+      - name: backend
+        image: hamzaruhail/project-backend:latest
+        ports:
+        - containerPort: 5500
+        envFrom:
+        - configMapRef:
+            name: webapp-config
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: fullstack-app
+  name: backend-service
+spec:
+  type: ClusterIP
+  ports:
+  - protocol: TCP
+    port: 5500
+    targetPort: 5500
+  selector:
+    app: node-backend
