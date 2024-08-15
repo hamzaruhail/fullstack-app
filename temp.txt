@@ -1,0 +1,16 @@
+hamzaruhail/project-frontend
+docker build -t hamzaruhail/project-backend .
+docker push hamzaruhail/project-backend
+kubectl create namespace fullstack-app
+kubectl apply -f pv.yaml
+kubectl apply -f pvc.yaml
+kubectl apply -f configmaps.yaml
+kubectl apply -f secrets.yaml
+kubectl apply -f backend-deployment.yaml
+
+kubectl get deployments -n fullstack-app
+kubectl get svc -n fullstack-app
+
+kubectl logs deployments/frontend-deployment -n fullstack-app 
+
+kubectl delete -f frontend-deployment.yaml
